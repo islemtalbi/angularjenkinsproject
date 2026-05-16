@@ -4,7 +4,7 @@ def getVersion(){
 }
 
 pipeline {
-    agent { label 'jenkins-vm' }
+    agent { label 'slave' }
     environment {
         DOCKER_TAG = getVersion()
     }
