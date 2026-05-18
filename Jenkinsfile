@@ -2,7 +2,6 @@ def getVersion(){
     def version = sh returnStdout: true, script: 'git rev-parse --short HEAD'
     return version.trim()
 }
-
 pipeline {
     agent { label 'slave' }
     environment {
@@ -30,11 +29,9 @@ pipeline {
         stage ('Deploy') {
             steps {
                 sshagent(credentials: ['Vagrant_ssh']) {
-                    sh "ssh -o StrictHostKeyChecking=no islemtalbi@192.168.56.10 'docker pull islemtalbidev/aston-villa-app:${DOCKER_TAG} && docker run -d -p 80:80 islemtalbidev/aston-villa-app:${DOCKER_TAG}'"
+                    sh "ssh -o StrictHostKeyChecking=no islemtalbi@192.168.56.10 'docker stop \$(docker ps -q) 2>/dev/null; docker rm \$(docker ps -aq) 2>/dev/null; docker run -d -p 80:80 islemtalbidev/aston-villa-app:${DOCKER_TAG}'"
                 }
             }
         }
     }
 }
-                
-
