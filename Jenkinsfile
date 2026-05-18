@@ -3,7 +3,7 @@ def getVersion(){
     return version.trim()
 }
 pipeline {
-    agent { label 'jenkins' }
+    agent { label 'slave' }
     environment {
         DOCKER_TAG = getVersion()
     }
